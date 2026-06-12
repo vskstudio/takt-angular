@@ -34,7 +34,10 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm size
+      # ng-packagr emits the consumable package (entry points, exports) into
+      # dist/; the root manifest has none, so publish from the built package.
       - run: pnpm publish --no-git-checks --access public
+        working-directory: dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           # Generate a signed npm provenance attestation (supply-chain).

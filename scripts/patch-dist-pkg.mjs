@@ -8,6 +8,10 @@ const pkg = JSON.parse(readFileSync(path, 'utf8'))
 // Fail loud if a future ng-packagr drops the main entry instead of shipping a broken exports map.
 if (!pkg.exports?.['.']) throw new Error('dist/package.json is missing the main "." export — ng-packagr output changed')
 
+// Published from dist/, so the root's `files: ["dist"]` would match nothing here
+// and strip the whole package — drop it and let npm pack the built tree.
+delete pkg.files
+
 pkg.unpkg = './element/index.js'
 pkg.jsdelivr = './element/index.js'
 pkg.sideEffects = ['./element/index.js']
