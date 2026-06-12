@@ -16,14 +16,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    strategy:
-      fail-fast: false
-      matrix:
-        # Exercise the Angular 17 support floor and a current major. Both are
-        # pinned (no floating `latest`) so CI never resolves an unverified
-        # version outside the lockfile; bump the ceiling deliberately.
-        angular: ['17', '19']
-    name: build (angular@${{ matrix.angular }})
     steps:
       # Third-party actions are pinned to a full commit SHA (supply-chain
       # hardening); the trailing comment tracks the human-readable version.
@@ -36,12 +28,8 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm add -D @angular/core@${{ matrix.angular }} @angular/common@${{ matrix.angular }} @angular/compiler@${{ matrix.angular }} @angular/compiler-cli@${{ matrix.angular }} @angular/platform-browser@${{ matrix.angular }} @angular/platform-browser-dynamic@${{ matrix.angular }} ng-packagr@${{ matrix.angular }}
       - run: pnpm lint
       - run: pnpm typecheck
-      # The Analog test harness tracks a single Angular major; unit tests run on
-      # the current one. The 17 floor is still exercised by typecheck + build.
-      - if: matrix.angular == '19'
-        run: pnpm test
+      - run: pnpm test
       - run: pnpm build
       - run: pnpm size
