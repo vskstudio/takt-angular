@@ -1,0 +1,6 @@
+export { provideTakt } from './lib/provide-takt'
+export { TaktService } from './lib/takt.service'
+export { TaktEventDirective } from './lib/takt-event.directive'
+export { TAKT_CONFIG } from './lib/tokens'
+export type { TaktConfig, TaktInstance } from './lib/types'
+export type { Config } from '@vskstudio/takt-core'

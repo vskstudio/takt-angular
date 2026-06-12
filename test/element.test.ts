@@ -1,0 +1,80 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { createTaktAnalyticsElement } from '../src/element/TaktAnalyticsElement'
+import { defineTaktElement } from '../src/element/index'
+
+const createTakt = vi.fn()
+vi.mock('@vskstudio/takt-core', () => ({ createTakt: (...a: unknown[]) => createTakt(...a) }))
+
+function makeInstance() {
+  return {
+    track: vi.fn(),
+    pageview: vi.fn(),
+    enableSpa: vi.fn(() => vi.fn()),
+    enableOutbound: vi.fn(() => vi.fn()),
+    enableFiles: vi.fn(() => vi.fn()),
+    optOut: vi.fn(),
+    optIn: vi.fn(),
+  }
+}
+
+// jsdom forbids `new` on an unregistered custom-element constructor, so each
+// test registers the lazy class under a unique tag and drives it through the DOM.
+let seq = 0
+function register(): string {
+  const tag = `takt-analytics-test-${seq++}`
+  customElements.define(tag, createTaktAnalyticsElement())
+  return tag
+}
+
+describe('<takt-analytics> custom element', () => {
+  beforeEach(() => createTakt.mockReset())
+
+  it('registers idempotently', () => {
+    defineTaktElement()
+    defineTaktElement()
+    expect(customElements.get('takt-analytics')).toBeTypeOf('function')
+  })
+
+  it('parses attrs: privacy default-on, presence flags, and fires pageview', () => {
+    const inst = makeInstance()
+    createTakt.mockReturnValue(inst)
+    const el = document.createElement(register())
+    el.setAttribute('domain', 'a.test')
+    el.setAttribute('outbound', '')
+    document.body.appendChild(el)
+
+    expect(createTakt).toHaveBeenCalledWith(
+      expect.objectContaining({ domain: 'a.test', respectDnt: true, excludeLocalhost: true }),
+    )
+    expect(inst.enableSpa).toHaveBeenCalledOnce() // spa default-on
+    expect(inst.enableOutbound).toHaveBeenCalledOnce()
+    expect(inst.enableFiles).not.toHaveBeenCalled()
+    expect(inst.pageview).toHaveBeenCalledOnce()
+    el.remove()
+  })
+
+  it('explicit "false" disables privacy/spa defaults', () => {
+    const inst = makeInstance()
+    createTakt.mockReturnValue(inst)
+    const el = document.createElement(register())
+    el.setAttribute('respect-dnt', 'false')
+    el.setAttribute('spa', 'false')
+    document.body.appendChild(el)
+
+    expect(createTakt).toHaveBeenCalledWith(expect.objectContaining({ respectDnt: false }))
+    expect(inst.enableSpa).not.toHaveBeenCalled()
+    el.remove()
+  })
+
+  it('disposes autocapture on disconnect', () => {
+    const inst = makeInstance()
+    const dispose = vi.fn()
+    inst.enableSpa.mockReturnValue(dispose)
+    createTakt.mockReturnValue(inst)
+    const el = document.createElement(register())
+    document.body.appendChild(el)
+    el.remove()
+
+    expect(dispose).toHaveBeenCalledOnce()
+  })
+})
