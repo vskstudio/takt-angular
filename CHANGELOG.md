@@ -1,5 +1,11 @@
 # @vskstudio/takt-angular
 
+## 0.3.1
+
+### Patch Changes
+
+- Harden the embed iframe: add `referrerpolicy="strict-origin-when-cross-origin"` and document that the bypassed `src` only ever sees a `host` that core has scheme-validated.
+
 ## 0.3.0
 
 ### Minor Changes

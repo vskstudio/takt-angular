@@ -105,6 +105,8 @@ const summary = await stats.summary({ period: '7d' })
 const series = await stats.timeseries({ period: '30d' })
 ```
 
+The optional `host` input must be an absolute `http(s)` URL — core validates it and throws on anything else (e.g. a `javascript:` URL).
+
 `badgeUrl`, `embedUrl`, `PublicApiError` and the widget/stats types are re-exported from core.
 
 ## Framework-agnostic custom element

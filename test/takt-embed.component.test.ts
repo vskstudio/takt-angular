@@ -15,6 +15,16 @@ class HostComponent {
   title = 'Stats'
 }
 
+@Component({
+  standalone: true,
+  imports: [TaktEmbedComponent],
+  template: `<takt-embed [domain]="domain" [host]="host" />`,
+})
+class UnsafeHostComponent {
+  domain = 'a.test'
+  host = 'javascript:alert(1)'
+}
+
 describe('<takt-embed>', () => {
   beforeEach(() => TestBed.resetTestingModule())
 
@@ -30,5 +40,18 @@ describe('<takt-embed>', () => {
     expect(el.getAttribute('title')).toBe('Stats')
     expect(el.getAttribute('width')).toBe('404')
     expect(el.getAttribute('height')).toBe('264')
+  })
+
+  it('sets a privacy-preserving referrer policy on the iframe', () => {
+    expect(iframe().getAttribute('referrerpolicy')).toBe('strict-origin-when-cross-origin')
+  })
+
+  it('throws (propagated from core) on an unsafe host instead of trusting a javascript: URL', () => {
+    // Core validates `host`, so `embedUrl` throws before the value can reach
+    // `bypassSecurityTrustResourceUrl` — no trusted javascript: URL is produced.
+    expect(() => {
+      const f = TestBed.createComponent(UnsafeHostComponent)
+      f.detectChanges()
+    }).toThrow()
   })
 })

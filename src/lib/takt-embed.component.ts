@@ -17,6 +17,7 @@ import { embedUrl, type EmbedTheme, type WidgetLang } from '@vskstudio/takt-core
     [width]="width"
     [height]="height"
     loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
     style="border:0"
   ></iframe>`,
 })
@@ -32,6 +33,9 @@ export class TaktEmbedComponent {
   @Input() title = 'takt'
 
   get src(): SafeResourceUrl {
+    // `embedUrl` validates `host` (core throws on a non-http(s)/protocol-relative
+    // host), so the string handed to `bypassSecurityTrustResourceUrl` is always a
+    // scheme-checked URL — the bypass can never trust a `javascript:` URL.
     const url = embedUrl(this.domain, { host: this.host, theme: this.theme, lang: this.lang })
     return this.sanitizer.bypassSecurityTrustResourceUrl(url)
   }
