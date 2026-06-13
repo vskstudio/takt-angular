@@ -1,5 +1,11 @@
 # @vskstudio/takt-angular
 
+## 0.3.0
+
+### Minor Changes
+
+- Add native `TaktBadge` and `TaktEmbed` widget components and re-export the public stats client (`createStats`) and widget URL builders from `@vskstudio/takt-core`. Requires `@vskstudio/takt-core` >= 0.3.0.
+
 ## 0.2.0
 
 ### Minor Changes

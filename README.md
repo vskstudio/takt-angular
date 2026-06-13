@@ -77,6 +77,36 @@ import { TaktEventDirective } from '@vskstudio/takt-angular'
 export class SignupComponent {}
 ```
 
+## Widgets
+
+Standalone, server-rendered widget components. The badge is an `<img>` (SVG), the embed is an `<iframe>`.
+
+```ts
+import { TaktBadgeComponent, TaktEmbedComponent } from '@vskstudio/takt-angular'
+
+@Component({
+  standalone: true,
+  imports: [TaktBadgeComponent, TaktEmbedComponent],
+  template: `
+    <takt-badge domain="example.com" variant="d" glyph="dash" lang="fr" />
+    <takt-embed domain="example.com" theme="dark" [width]="404" [height]="264" />
+  `,
+})
+export class StatsComponent {}
+```
+
+Read public stats programmatically with `createStats`:
+
+```ts
+import { createStats } from '@vskstudio/takt-angular'
+
+const stats = createStats({ domain: 'example.com' })
+const summary = await stats.summary({ period: '7d' })
+const series = await stats.timeseries({ period: '30d' })
+```
+
+`badgeUrl`, `embedUrl`, `PublicApiError` and the widget/stats types are re-exported from core.
+
 ## Framework-agnostic custom element
 
 For non-Angular pages (or a plain `<script>` tag), use the self-contained `<takt-analytics>` element. Privacy attributes are on by default; set them to `false` to disable.
@@ -104,6 +134,9 @@ Via CDN (bundles core, no build step):
 | `provideTakt(config?)` | `EnvironmentProviders` — install at bootstrap. |
 | `TaktService` | Injectable: `track`, `pageview`, `optOut`, `optIn`, `instance`. |
 | `TaktEventDirective` | `[taktEvent]` standalone directive for click tracking. |
+| `TaktBadgeComponent` | `<takt-badge>` standalone component — server-rendered SVG badge. |
+| `TaktEmbedComponent` | `<takt-embed>` standalone component — server-rendered iframe. |
+| `createStats(opts?)` | Public stats client (`summary`/`timeseries`/`realtime`/`breakdown`). |
 | `TAKT_CONFIG` | InjectionToken holding the resolved config. |
 | `defineTaktElement` | Registers `<takt-analytics>` (from `./element`). |
 

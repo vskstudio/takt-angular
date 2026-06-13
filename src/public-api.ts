@@ -1,6 +1,30 @@
 export { provideTakt } from './lib/provide-takt'
 export { TaktService } from './lib/takt.service'
 export { TaktEventDirective } from './lib/takt-event.directive'
+export { TaktBadgeComponent } from './lib/takt-badge.component'
+export { TaktEmbedComponent } from './lib/takt-embed.component'
 export { TAKT_CONFIG } from './lib/tokens'
 export type { TaktConfig, TaktInstance } from './lib/types'
-export type { Config } from '@vskstudio/takt-core'
+
+export { createStats, PublicApiError, badgeUrl, embedUrl } from '@vskstudio/takt-core'
+export type {
+  Config,
+  BadgeOptions,
+  EmbedOptions,
+  BadgeVariant,
+  BadgeGlyph,
+  EmbedTheme,
+  WidgetLang,
+  StatsClient,
+  StatsClientOptions,
+  StatsParams,
+  StatsPeriod,
+  StatsDimension,
+  StatsMetrics,
+  StatsSummary,
+  StatsPoint,
+  StatsTimeseries,
+  StatsBreakdownRow,
+  StatsBreakdown,
+  StatsRealtime,
+} from '@vskstudio/takt-core'
