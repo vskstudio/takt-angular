@@ -9,7 +9,7 @@ import { badgeUrl, type BadgeGlyph, type BadgeVariant, type WidgetLang } from '@
   selector: 'takt-badge',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<img [src]="src" alt="takt" loading="lazy" decoding="async" />`,
+  template: `<img [src]="src" [alt]="alt" loading="lazy" decoding="async" />`,
 })
 export class TaktBadgeComponent {
   @Input({ required: true }) domain = ''
@@ -17,6 +17,7 @@ export class TaktBadgeComponent {
   @Input() glyph?: BadgeGlyph
   @Input() lang?: WidgetLang
   @Input() host?: string
+  @Input() alt = 'takt'
 
   get src(): string {
     return badgeUrl(this.domain, {
