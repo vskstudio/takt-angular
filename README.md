@@ -79,7 +79,7 @@ export class SignupComponent {}
 
 ## Widgets
 
-Standalone, server-rendered widget components. The badge is an `<img>` (SVG), the embed is an `<iframe>`.
+Standalone, server-rendered widget components. The badge is an `<img>` (SVG), the embed is a sandboxed `<iframe>` (`sandbox="allow-scripts allow-same-origin"`, `referrerpolicy="strict-origin-when-cross-origin"`).
 
 ```ts
 import { TaktBadgeComponent, TaktEmbedComponent } from '@vskstudio/takt-angular'
@@ -105,7 +105,7 @@ const summary = await stats.summary({ period: '7d' })
 const series = await stats.timeseries({ period: '30d' })
 ```
 
-The optional `host` input must be an absolute `http(s)` URL — core validates it and throws on anything else (e.g. a `javascript:` URL).
+The badge `alt` text is an overridable input (defaults to `"takt"`). The optional `host` input must be an absolute `http(s)` URL — core validates it and throws on anything else (e.g. a `javascript:` URL).
 
 `badgeUrl`, `embedUrl`, `PublicApiError` and the widget/stats types are re-exported from core.
 
