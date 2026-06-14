@@ -18,6 +18,7 @@ import { embedUrl, type EmbedTheme, type WidgetLang } from '@vskstudio/takt-core
     [height]="height"
     loading="lazy"
     referrerpolicy="strict-origin-when-cross-origin"
+    sandbox="allow-scripts allow-same-origin"
     style="border:0"
   ></iframe>`,
 })
