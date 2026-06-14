@@ -15,16 +15,6 @@ class HostComponent {
   title = 'Stats'
 }
 
-@Component({
-  standalone: true,
-  imports: [TaktEmbedComponent],
-  template: `<takt-embed [domain]="domain" [host]="host" />`,
-})
-class UnsafeHostComponent {
-  domain = 'a.test'
-  host = 'javascript:alert(1)'
-}
-
 describe('<takt-embed>', () => {
   beforeEach(() => TestBed.resetTestingModule())
 
@@ -47,11 +37,12 @@ describe('<takt-embed>', () => {
   })
 
   it('throws (propagated from core) on an unsafe host instead of trusting a javascript: URL', () => {
-    // Core validates `host`, so `embedUrl` throws before the value can reach
-    // `bypassSecurityTrustResourceUrl` — no trusted javascript: URL is produced.
-    expect(() => {
-      const f = TestBed.createComponent(UnsafeHostComponent)
-      f.detectChanges()
-    }).toThrow()
+    // Read the `src` getter directly: it calls core's `embedUrl`, which throws on
+    // a non-http(s) host before any value can reach bypassSecurityTrustResourceUrl.
+    // Going through detectChanges() would let zone.js swallow the throw asynchronously.
+    const f = TestBed.createComponent(TaktEmbedComponent)
+    f.componentInstance.domain = 'a.test'
+    f.componentInstance.host = 'javascript:alert(1)'
+    expect(() => f.componentInstance.src).toThrow()
   })
 })
