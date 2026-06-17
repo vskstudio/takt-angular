@@ -66,6 +66,19 @@ describe('<takt-analytics> custom element', () => {
     el.remove()
   })
 
+  it('forwards script-origin to the core', () => {
+    const inst = makeInstance()
+    createTakt.mockReturnValue(inst)
+    const el = document.createElement(register())
+    el.setAttribute('script-origin', 'https://t.example.com')
+    document.body.appendChild(el)
+
+    expect(createTakt).toHaveBeenCalledWith(
+      expect.objectContaining({ scriptOrigin: 'https://t.example.com' }),
+    )
+    el.remove()
+  })
+
   it('disposes autocapture on disconnect', () => {
     const inst = makeInstance()
     const dispose = vi.fn()
