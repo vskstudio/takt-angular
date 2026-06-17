@@ -90,12 +90,24 @@ describe('provideTakt', () => {
     createTakt.mockReturnValue(inst)
 
     TestBed.configureTestingModule({
-      providers: [provideTakt({ endpoint: '/ingest', respectDnt: false, excludeLocalhost: false })],
+      providers: [
+        provideTakt({
+          endpoint: '/ingest',
+          scriptOrigin: 'https://takt.example.com',
+          respectDnt: false,
+          excludeLocalhost: false,
+        }),
+      ],
     })
     TestBed.inject(TaktService)
 
     expect(createTakt).toHaveBeenCalledWith(
-      expect.objectContaining({ endpoint: '/ingest', respectDnt: false, excludeLocalhost: false }),
+      expect.objectContaining({
+        endpoint: '/ingest',
+        scriptOrigin: 'https://takt.example.com',
+        respectDnt: false,
+        excludeLocalhost: false,
+      }),
     )
   })
 

@@ -16,6 +16,7 @@ export function createTaktAnalyticsElement(): CustomElementConstructor {
       const takt = createTakt({
         domain: attr('domain') ?? undefined,
         endpoint: attr('endpoint') ?? undefined,
+        scriptOrigin: attr('script-origin') ?? undefined,
         respectDnt: truthy(attr('respect-dnt')),
         excludeLocalhost: truthy(attr('exclude-localhost')),
       })

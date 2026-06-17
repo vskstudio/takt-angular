@@ -33,6 +33,7 @@ export function provideTakt(config: TaktConfig = {}): EnvironmentProviders {
         const takt = createTakt({
           domain: c.domain,
           endpoint: c.endpoint,
+          scriptOrigin: c.scriptOrigin,
           respectDnt: c.respectDnt ?? true,
           excludeLocalhost: c.excludeLocalhost ?? true,
         })

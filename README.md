@@ -144,7 +144,9 @@ Via CDN (bundles core, no build step):
 
 ### `TaktConfig`
 
-`domain?`, `endpoint?`, `outbound = false`, `files = false` (or `string[]`), `spa = true`, `respectDnt = true`, `excludeLocalhost = true`.
+`domain?`, `endpoint?`, `scriptOrigin?`, `outbound = false`, `files = false` (or `string[]`), `spa = true`, `respectDnt = true`, `excludeLocalhost = true`.
+
+`scriptOrigin?` — First-party origin to derive the endpoint from (`{origin}/api/event`) — your Takt domain or a custom domain to dodge ad-blockers (endpoint wins over it).
 
 ## License
 
