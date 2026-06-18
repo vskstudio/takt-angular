@@ -23,7 +23,7 @@ describe('noopTakt', () => {
   it('exposes enable* helpers that return callable no-op disposers', async () => {
     const { noopTakt } = await import('../src/lib/noop')
     const t = noopTakt()
-    for (const enable of [t.enableSpa, t.enableOutbound, t.enableFiles]) {
+    for (const enable of [t.enableSpa, t.enableOutbound, t.enableFiles, t.enable404]) {
       const dispose = enable()
       expect(dispose).toBeTypeOf('function')
       expect(() => dispose()).not.toThrow()

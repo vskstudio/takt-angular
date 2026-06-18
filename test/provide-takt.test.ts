@@ -14,6 +14,7 @@ function makeInstance() {
     enableSpa: vi.fn(() => vi.fn()),
     enableOutbound: vi.fn(() => vi.fn()),
     enableFiles: vi.fn(() => vi.fn()),
+    enable404: vi.fn(() => vi.fn()),
     optOut: vi.fn(),
     optIn: vi.fn(),
   }
@@ -47,6 +48,17 @@ describe('provideTakt', () => {
     expect(inst.enableSpa).toHaveBeenCalledOnce()
     expect(inst.enableOutbound).toHaveBeenCalledOnce()
     expect(inst.enableFiles).not.toHaveBeenCalled()
+    expect(inst.enable404).not.toHaveBeenCalled()
+  })
+
+  it('enables 404 reporting only when track404 is set', () => {
+    const inst = makeInstance()
+    createTakt.mockReturnValue(inst)
+
+    TestBed.configureTestingModule({ providers: [provideTakt({ track404: true })] })
+    TestBed.inject(TaktService)
+
+    expect(inst.enable404).toHaveBeenCalledOnce()
   })
 
   it('passes a file-extension array through to enableFiles', () => {

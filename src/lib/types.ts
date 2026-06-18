@@ -5,7 +5,7 @@ import type { createTakt } from '@vskstudio/takt-core'
 // for token/service values invalid (TS4094).
 export type TaktInstance = Pick<
   ReturnType<typeof createTakt>,
-  'track' | 'pageview' | 'enableSpa' | 'enableOutbound' | 'enableFiles' | 'optOut' | 'optIn'
+  'track' | 'pageview' | 'enableSpa' | 'enableOutbound' | 'enableFiles' | 'enable404' | 'optOut' | 'optIn'
 >
 
 /** Configuration for {@link provideTakt}. Mirrors the React wrapper's props. */
@@ -26,6 +26,11 @@ export interface TaktConfig {
   files?: boolean | string[]
   /** Track SPA navigations (history pushState/replaceState + popstate). */
   spa?: boolean
+  /**
+   * Report a `404` event when the page is an error page
+   * (`[data-takt-404]` / `<meta name="takt:404">` marker, or a 404 HTTP status).
+   */
+  track404?: boolean
   /** Suppress events when the browser's Do Not Track is enabled. */
   respectDnt?: boolean
   /** Suppress events on localhost and private IP ranges. */

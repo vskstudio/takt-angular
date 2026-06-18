@@ -23,6 +23,7 @@ export function createTaktAnalyticsElement(): CustomElementConstructor {
       if (truthy(attr('spa'))) this.disposers.push(takt.enableSpa())
       if (this.hasAttribute('outbound')) this.disposers.push(takt.enableOutbound())
       if (this.hasAttribute('files')) this.disposers.push(takt.enableFiles())
+      if (this.hasAttribute('track404')) this.disposers.push(takt.enable404())
       takt.pageview()
     }
 

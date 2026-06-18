@@ -42,6 +42,7 @@ export function provideTakt(config: TaktConfig = {}): EnvironmentProviders {
         if (c.spa ?? true) disposers.push(takt.enableSpa())
         if (c.outbound) disposers.push(takt.enableOutbound())
         if (c.files) disposers.push(takt.enableFiles(Array.isArray(c.files) ? c.files : undefined))
+        if (c.track404) disposers.push(takt.enable404())
 
         takt.pageview()
         service._setInstance(takt)

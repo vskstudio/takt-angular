@@ -12,6 +12,7 @@ function makeInstance() {
     enableSpa: vi.fn(() => vi.fn()),
     enableOutbound: vi.fn(() => vi.fn()),
     enableFiles: vi.fn(() => vi.fn()),
+    enable404: vi.fn(() => vi.fn()),
     optOut: vi.fn(),
     optIn: vi.fn(),
   }
@@ -49,7 +50,19 @@ describe('<takt-analytics> custom element', () => {
     expect(inst.enableSpa).toHaveBeenCalledOnce() // spa default-on
     expect(inst.enableOutbound).toHaveBeenCalledOnce()
     expect(inst.enableFiles).not.toHaveBeenCalled()
+    expect(inst.enable404).not.toHaveBeenCalled()
     expect(inst.pageview).toHaveBeenCalledOnce()
+    el.remove()
+  })
+
+  it('enables 404 reporting only when the track404 attribute is present', () => {
+    const inst = makeInstance()
+    createTakt.mockReturnValue(inst)
+    const el = document.createElement(register())
+    el.setAttribute('track404', '')
+    document.body.appendChild(el)
+
+    expect(inst.enable404).toHaveBeenCalledOnce()
     el.remove()
   })
 

@@ -144,7 +144,9 @@ Via CDN (bundles core, no build step):
 
 ### `TaktConfig`
 
-`domain?`, `endpoint?`, `scriptOrigin?`, `outbound = false`, `files = false` (or `string[]`), `spa = true`, `respectDnt = true`, `excludeLocalhost = true`.
+`domain?`, `endpoint?`, `scriptOrigin?`, `outbound = false`, `files = false` (or `string[]`), `track404 = false`, `spa = true`, `respectDnt = true`, `excludeLocalhost = true`.
+
+`track404?` — Report a `404` event when the page is an error page (`[data-takt-404]` / `<meta name="takt:404">` marker, or a 404 HTTP status).
 
 `scriptOrigin?` — First-party origin to derive the endpoint from (`{origin}/api/event`) — your Takt domain or a custom domain to dodge ad-blockers (endpoint wins over it).
 
