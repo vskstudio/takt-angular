@@ -25,7 +25,7 @@ export function createTaktAnalyticsElement(): CustomElementConstructor {
         respectDnt: truthy(attr('respect-dnt')),
         excludeLocalhost: truthy(attr('exclude-localhost')),
         enabled: this.hasAttribute('enabled') ? truthy(attr('enabled')) : undefined,
-        sampleRate: sampleRateRaw !== null ? parseFloat(sampleRateRaw) : undefined,
+        sampleRate: sampleRateRaw !== null && Number.isFinite(parseFloat(sampleRateRaw)) ? parseFloat(sampleRateRaw) : undefined,
         trackQuery: this.hasAttribute('track-query') ? truthy(attr('track-query')) : undefined,
         queryParams: queryParams?.length ? queryParams : undefined,
       })
