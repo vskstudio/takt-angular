@@ -144,11 +144,23 @@ Via CDN (bundles core, no build step):
 
 ### `TaktConfig`
 
-`domain?`, `endpoint?`, `scriptOrigin?`, `outbound = false`, `files = false` (or `string[]`), `track404 = false`, `spa = true`, `respectDnt = true`, `excludeLocalhost = true`.
-
-`track404?` — Report a `404` event when the page is an error page (`[data-takt-404]` / `<meta name="takt:404">` marker, or a 404 HTTP status).
-
-`scriptOrigin?` — First-party origin to derive the endpoint from (`{origin}/api/event`) — your Takt domain or a custom domain to dodge ad-blockers (endpoint wins over it).
+| Option | Default | Description |
+| --- | --- | --- |
+| `domain` | `location.hostname` | Site identifier sent with every event. |
+| `endpoint` | `/api/event` | Ingestion endpoint. |
+| `scriptOrigin` | — | First-party origin (`{origin}/api/event`); `endpoint` takes precedence. |
+| `outbound` | `false` | Auto-track outbound link clicks. |
+| `files` | `false` | Auto-track file downloads (or pass `string[]` to restrict extensions). |
+| `track404` | `false` | Report a `404` event on error pages (`[data-takt-404]` / `<meta name="takt:404">`). |
+| `spa` | `true` | Track SPA navigations (pushState / replaceState / popstate). |
+| `respectDnt` | `true` | Suppress events when the browser's Do Not Track is enabled. |
+| `excludeLocalhost` | `true` | Suppress events on localhost and private IP ranges. |
+| `enabled` | `true` | Set to `false` to disable tracking entirely. |
+| `sampleRate` | `1` | Fraction of sessions to record, between `0` and `1`. |
+| `trackQuery` | `false` | Include the query string in page URLs sent with events. |
+| `queryParams` | `[]` | Allowlist of query-param names to keep when `trackQuery` is on. |
+| `scrubUrl` | — | Transform the URL before it is sent. Function prop — dev-controlled, config only (cannot be set via the `<takt-analytics>` element attribute). |
+| `tagged` | `false` | Auto-track clicks on `[data-takt-tag]` elements. |
 
 ## License
 

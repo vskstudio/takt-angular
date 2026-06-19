@@ -18,8 +18,9 @@ export function noopTakt(): TaktInstance {
     enableOutbound: noDispose,
     enableFiles: noDispose,
     enable404: noDispose,
+    enableTagged: noDispose,
     optOut: () => {},
     optIn: () => {},
   }
-  return _noop
+  return _noop as TaktInstance
 }

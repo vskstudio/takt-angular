@@ -5,7 +5,7 @@ import type { createTakt } from '@vskstudio/takt-core'
 // for token/service values invalid (TS4094).
 export type TaktInstance = Pick<
   ReturnType<typeof createTakt>,
-  'track' | 'pageview' | 'enableSpa' | 'enableOutbound' | 'enableFiles' | 'enable404' | 'optOut' | 'optIn'
+  'track' | 'pageview' | 'enableSpa' | 'enableOutbound' | 'enableFiles' | 'enable404' | 'enableTagged' | 'optOut' | 'optIn'
 >
 
 /** Configuration for {@link provideTakt}. Mirrors the React wrapper's props. */
@@ -35,4 +35,19 @@ export interface TaktConfig {
   respectDnt?: boolean
   /** Suppress events on localhost and private IP ranges. */
   excludeLocalhost?: boolean
+  /** Disable tracking entirely (overrides all other options). */
+  enabled?: boolean
+  /** Fraction of sessions to track, between 0 and 1. */
+  sampleRate?: number
+  /** Include the query string in the page URL sent with events. */
+  trackQuery?: boolean
+  /** Allowlist of query-param names to preserve when `trackQuery` is on. */
+  queryParams?: string[]
+  /**
+   * Transform the URL before it is sent. Called server-side only (via config);
+   * cannot be set via a custom-element attribute.
+   */
+  scrubUrl?: (url: string) => string
+  /** Auto-track clicks on `[data-takt-tag]` elements. */
+  tagged?: boolean
 }
