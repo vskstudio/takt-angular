@@ -36,6 +36,11 @@ export function provideTakt(config: TaktConfig = {}): EnvironmentProviders {
           scriptOrigin: c.scriptOrigin,
           respectDnt: c.respectDnt ?? true,
           excludeLocalhost: c.excludeLocalhost ?? true,
+          enabled: c.enabled,
+          sampleRate: c.sampleRate,
+          trackQuery: c.trackQuery,
+          queryParams: c.queryParams,
+          scrubUrl: c.scrubUrl,
         })
 
         const disposers: Array<() => void> = []
@@ -43,6 +48,7 @@ export function provideTakt(config: TaktConfig = {}): EnvironmentProviders {
         if (c.outbound) disposers.push(takt.enableOutbound())
         if (c.files) disposers.push(takt.enableFiles(Array.isArray(c.files) ? c.files : undefined))
         if (c.track404) disposers.push(takt.enable404())
+        if (c.tagged) disposers.push(takt.enableTagged())
 
         takt.pageview()
         service._setInstance(takt)
