@@ -1,5 +1,11 @@
 # @vskstudio/takt-angular
 
+## 0.5.1
+
+### Patch Changes
+
+- Republish from `dist/` so the package ships its `exports`/`module`/`types` entry points. 0.5.0 was published from the repo root (whose `package.json` lacks those fields), which left the package unresolvable; the `release` script now publishes the built `dist/` tree.
+
 ## 0.5.0
 
 ### Minor Changes
