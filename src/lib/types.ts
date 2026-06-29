@@ -12,11 +12,11 @@ export type TaktInstance = Pick<
 export interface TaktConfig {
   /** Site identifier sent with every event. Defaults to `location.hostname`. */
   domain?: string
-  /** Ingestion endpoint. Defaults to `/api/event`. */
+  /** Ingestion endpoint. Defaults to `https://taktlytics.com/api/event` (the hosted Takt origin); pass `/api/event` for a same-origin first-party proxy. */
   endpoint?: string
   /**
    * First-party origin to derive the endpoint from (`{origin}/api/event`) —
-   * your Takt domain or a custom domain to dodge ad-blockers
+   * a custom domain you proxy through to dodge ad-blockers
    * (`endpoint` wins over it).
    */
   scriptOrigin?: string
