@@ -43,6 +43,8 @@ export interface TaktConfig {
   trackQuery?: boolean
   /** Allowlist of query-param names to preserve when `trackQuery` is on. */
   queryParams?: string[]
+  /** Path prefixes never tracked, e.g. `['/app','/account']`. Segment-bounded: `'/app'` matches `'/app'` and `'/app/…'` but not `'/application'`. */
+  exclude?: string[]
   /**
    * Transform the URL before it is sent. Called server-side only (via config);
    * cannot be set via a custom-element attribute.

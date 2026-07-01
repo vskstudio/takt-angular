@@ -40,6 +40,7 @@ export function provideTakt(config: TaktConfig = {}): EnvironmentProviders {
           sampleRate: c.sampleRate,
           trackQuery: c.trackQuery,
           queryParams: c.queryParams,
+          exclude: c.exclude,
           scrubUrl: c.scrubUrl,
         })
 
