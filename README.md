@@ -159,6 +159,7 @@ Via CDN (bundles core, no build step):
 | `sampleRate` | `1` | Fraction of sessions to record, between `0` and `1`. |
 | `trackQuery` | `false` | Include the query string in page URLs sent with events. |
 | `queryParams` | `[]` | Allowlist of query-param names to keep when `trackQuery` is on. |
+| `exclude` | `[]` | Path prefixes never tracked, e.g. `['/app', '/account']` (segment-bounded, checked at send time). |
 | `scrubUrl` | — | Transform the URL before it is sent. Function prop — dev-controlled, config only (cannot be set via the `<takt-analytics>` element attribute). |
 | `tagged` | `false` | Auto-track clicks on `[data-takt-tag]` elements. |
 
