@@ -26,7 +26,7 @@ describe('<takt-embed>', () => {
 
   it('renders an <iframe> whose src reflects domain and theme', () => {
     const el = iframe()
-    expect(el.getAttribute('src')).toBe('/embed/a.test?theme=dark')
+    expect(el.getAttribute('src')).toBe('https://taktlytics.com/embed/a.test?theme=dark')
     expect(el.getAttribute('title')).toBe('Stats')
     expect(el.getAttribute('width')).toBe('404')
     expect(el.getAttribute('height')).toBe('264')

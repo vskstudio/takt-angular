@@ -26,7 +26,9 @@ describe('<takt-badge>', () => {
 
   it('renders an <img> whose src reflects domain and options', () => {
     const el = img()
-    expect(el.getAttribute('src')).toBe('/public/a.test/badge.svg?variant=d&glyph=dash')
+    expect(el.getAttribute('src')).toBe(
+      'https://taktlytics.com/public/a.test/badge.svg?variant=d&glyph=dash',
+    )
     expect(el.getAttribute('loading')).toBe('lazy')
   })
 })
